@@ -1,0 +1,5 @@
+[
+  { "id": 1, "value": "Hello", "lang": "en-GB" },
+  { "id": 2, "value": "Ahoj", "lang": "cs"     },
+  { "id": 3, "value": "Ciao", "lang": "it"     }
+]
