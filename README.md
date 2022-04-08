@@ -13,3 +13,15 @@ $ docker run --rm -d -p 8080:4000 hello-api
 $ npm install
 $ npm run start
 ```
+
+## Available methods
+
+### GET /ping
+
+### GET /hellos
+
+- query parameters:
+  - id
+  - value
+
+### GET /hellos/:id
