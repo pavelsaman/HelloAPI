@@ -140,6 +140,43 @@ router.delete('/hellos/:id', function (req, res, next) {
   });
 });
 
+router.put('/hellos/:id', function (req, res, next) {
+  if (!req.body || !req.body?.value || !req.body?.lang) {
+    res.status(400).json({
+      status: 400,
+      statusText: 'Bad Request',
+      message: 'No body provided.',
+      error: {
+        code: 'BAD_REQUEST',
+        message: 'No body provided.',
+      },
+    });
+  } else {
+    helloRepo.update(req.params.id, req.body, function (data) {
+      res.status(200).json({
+        status: 200,
+        statusText: 'OK',
+        message: 'Resource updated.',
+        data: data,
+      });
+    }, function (err) {
+      if (err == 404) {
+        res.status(404).json({
+          status: 404,
+          statusText: 'Not Found',
+          message: `No hello with id ${req.params.id} found.`,
+          error: {
+            code: 'NOT_FOUND',
+            message: `No hello with id ${req.params.id} found.`,
+          },
+        });
+      } else {
+        next(err);
+      }
+    });
+  }
+});
+
 app.use(`${API_PATH}${API_VERSION}`, router);
 
 const server = app.listen(PORT, function () {
