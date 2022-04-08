@@ -39,3 +39,24 @@ $ npm run start
 ```
 
 ### DELETE /hellos/:id
+
+### PUT /hellos/:id
+
+- example body:
+
+```json
+{
+    "value": "Ciao",
+    "lang": "it"
+}
+```
+
+### PATCH /hellos/:id
+
+- example body:
+
+```json
+{
+    "value": "Ciao"
+}
+```
