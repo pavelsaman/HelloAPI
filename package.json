@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
-    "test": "echo \"Fail, no checks available. How would you test it? :)\""
+    "test": "echo \"Fail, no checks available. How would you test it? :)\"",
+    "seed": "cp assets/hellos.json.BACKUP assets/hellos.json"
   },
   "author": "Pavel Saman",
   "license": "ISC",
