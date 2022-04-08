@@ -8,7 +8,22 @@ const API_PATH = process.env.API_PATH_PREFIX;
 const API_VERSION = process.env.API_VERSION;
 const PORT = process.env.PORT;
 
-app.use(`${API_PATH}${API_VERSION}`, router);
+app.use(express.json());
+app.use((err, req, res, next) => {
+  if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+      let formattedError = {
+        status: err.statusCode,
+        statusText: 'Bad Request',
+        message: err.message,
+        error: {
+          code: 'BAD_REQUEST',
+          message: err.message,
+        },
+      }
+      return res.status(err.statusCode).json(formattedError);
+  }
+  next();
+});
 
 router.get('/ping', function (req, res, next) {
   res.status(200).json({
@@ -91,6 +106,33 @@ router.get('/hellos/:id', function (req, res, next) {
     next(err);
   });
 });
+
+router.post('/hellos', function (req, res, next) {
+  if (!req.body || !req.body?.value || !req.body?.lang) {
+    res.status(400).json({
+      status: 400,
+      statusText: 'Bad Request',
+      message: 'No body provided.',
+      error: {
+        code: 'BAD_REQUEST',
+        message: 'No body provided.',
+      },
+    });
+  } else {
+    helloRepo.insert(req.body, function (data) {
+      res.status(201).json({
+        status: 201,
+        statusText: 'Created',
+        message: 'New resource created.',
+        data: data,
+      });
+    }, function (err) {
+      next(err);
+    });
+  }
+});
+
+app.use(`${API_PATH}${API_VERSION}`, router);
 
 const server = app.listen(PORT, function () {
   console.log(`Node server is running on http://localhost:${PORT}${API_PATH}`);

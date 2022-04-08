@@ -35,6 +35,23 @@ const helloRepo = {
       }
     });
   },
+  insert: function (newData, resolve, reject) {
+    fs.readFile(FILE, function (err, data) {
+      if (err) {
+        reject(err);
+      } else {
+        let existingData = JSON.parse(data);
+        existingData.push(newData);
+        fs.writeFile(FILE, JSON.stringify(existingData), function (err) {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(newData);
+          }
+        });
+      }
+    });
+  },
 };
 
 module.exports = helloRepo;
