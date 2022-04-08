@@ -25,3 +25,15 @@ $ npm run start
   - value
 
 ### GET /hellos/:id
+
+### POST /hellos
+
+- example body:
+
+```json
+{
+    "id": 6,
+    "value": "Ciao",
+    "lang": "it"
+}
+```
