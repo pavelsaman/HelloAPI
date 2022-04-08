@@ -132,6 +132,14 @@ router.post('/hellos', function (req, res, next) {
   }
 });
 
+router.delete('/hellos/:id', function (req, res, next) {
+  helloRepo.delete(req.params.id, function () {
+    res.status(204).send();
+  }, function (err) {
+    next(err);
+  });
+});
+
 app.use(`${API_PATH}${API_VERSION}`, router);
 
 const server = app.listen(PORT, function () {

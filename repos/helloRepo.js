@@ -52,6 +52,18 @@ const helloRepo = {
       }
     });
   },
+  delete: function (id, resolve, reject) {
+    fs.readFile(FILE, function (err, data) {
+      if (err) reject(err);
+      else {
+        let existingData = JSON.parse(data).filter(h => h.id != id);
+        fs.writeFile(FILE, JSON.stringify(existingData), function (err) {
+          if (err) reject(err);
+          else resolve();
+        });
+      }
+    });
+  },
 };
 
 module.exports = helloRepo;

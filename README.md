@@ -37,3 +37,5 @@ $ npm run start
     "lang": "it"
 }
 ```
+
+### DELETE /hellos/:id
