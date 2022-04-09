@@ -18,11 +18,16 @@ $ npm run start
 
 ### GET /ping
 
+### OPTIONS /
+
+### OPTIONS /hellos
+
 ### GET /hellos
 
 - query parameters:
   - id
   - value
+  - lang
 
 ### GET /hellos/:id
 
