@@ -81,7 +81,7 @@ const helloRepo = {
             else resolve(existingResource);
           });
         } else {
-          reject(404);
+          reject(err);
         }
       }
     });

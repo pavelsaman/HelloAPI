@@ -133,8 +133,24 @@ router.post('/hellos', function (req, res, next) {
 });
 
 router.delete('/hellos/:id', function (req, res, next) {
-  helloRepo.delete(req.params.id, function () {
-    res.status(204).send();
+  helloRepo.getById(req.params.id, function (data) {
+    if (data) {
+      helloRepo.delete(req.params.id, function () {
+        res.status(204).send();
+      }, function (err) {
+        next(err);
+      });
+    } else {
+      res.status(404).json({
+        status: 404,
+        statusText: 'Not Found',
+        message: `No hello with id ${req.params.id} found.`,
+        error: {
+          code: 'NOT_FOUND',
+          message: `No hello with id ${req.params.id} found.`,
+        },
+      });
+    }
   }, function (err) {
     next(err);
   });
@@ -145,22 +161,26 @@ router.put('/hellos/:id', function (req, res, next) {
     res.status(400).json({
       status: 400,
       statusText: 'Bad Request',
-      message: 'No body provided.',
+      message: 'No body or wrong body provided.',
       error: {
         code: 'BAD_REQUEST',
-        message: 'No body provided.',
+        message: 'No body or wrong body provided.',
       },
     });
   } else {
-    helloRepo.update(req.params.id, req.body, function (data) {
-      res.status(200).json({
-        status: 200,
-        statusText: 'OK',
-        message: 'Resource updated.',
-        data: data,
-      });
-    }, function (err) {
-      if (err == 404) {
+    helloRepo.getById(req.params.id, function (data) {
+      if (data) {
+        helloRepo.update(req.params.id, req.body, function (data) {
+          res.status(200).json({
+            status: 200,
+            statusText: 'OK',
+            message: 'Resource updated.',
+            data: data,
+          });
+        }, function (err) {
+          next(err);
+        });
+      } else {
         res.status(404).json({
           status: 404,
           statusText: 'Not Found',
@@ -170,9 +190,9 @@ router.put('/hellos/:id', function (req, res, next) {
             message: `No hello with id ${req.params.id} found.`,
           },
         });
-      } else {
-        next(err);
       }
+    }, function (err) {
+      next(err);
     });
   }
 });
@@ -182,22 +202,26 @@ router.patch('/hellos/:id', function (req, res, next) {
     res.status(400).json({
       status: 400,
       statusText: 'Bad Request',
-      message: 'No body provided.',
+      message: 'No body or wrong body provided.',
       error: {
         code: 'BAD_REQUEST',
-        message: 'No body provided.',
+        message: 'No body or wrong body provided.',
       },
     });
   } else {
-    helloRepo.update(req.params.id, req.body, function (data) {
-      res.status(200).json({
-        status: 200,
-        statusText: 'OK',
-        message: 'Resource updated.',
-        data: data,
-      });
-    }, function (err) {
-      if (err == 404) {
+    helloRepo.getById(req.params.id, function (data) {
+      if (data) {
+        helloRepo.update(req.params.id, req.body, function (data) {
+          res.status(200).json({
+            status: 200,
+            statusText: 'OK',
+            message: 'Resource updated.',
+            data: data,
+          });
+        }, function (err) {
+          next(err);
+        });
+      } else {
         res.status(404).json({
           status: 404,
           statusText: 'Not Found',
@@ -207,9 +231,9 @@ router.patch('/hellos/:id', function (req, res, next) {
             message: `No hello with id ${req.params.id} found.`,
           },
         });
-      } else {
-        next(err);
       }
+    }, function (err) {
+      next(err);
     });
   }
 });
