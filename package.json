@@ -4,7 +4,7 @@
   "description": "Example REST API - say hello in different languages.",
   "main": "index.js",
   "scripts": {
-    "start": "mkdir logs 2>/dev/null && nodemon index.js",
+    "start": "mkdir logs 2>/dev/null; nodemon index.js",
     "test": "echo \"Fail, no checks available. How would you test it? :)\"",
     "seed": "cp assets/hellos.json.BACKUP assets/hellos.json",
     "clean-logs": "rm logs/*"

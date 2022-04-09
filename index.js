@@ -20,6 +20,12 @@ router.get('/ping', function (req, res, next) {
   });
 });
 
+router.get('/seed', function (req, res, next) {
+  helloRepo.seed(function () {
+    res.status(204).send();
+  });
+});
+
 router.options('/', function (req, res, next) {
   res.set('Allow', 'OPTIONS, GET, POST, PUT, PATCH, DELETE').send();
 });

@@ -1,8 +1,20 @@
 const fs = require('fs');
 
 const FILE = './assets/hellos.json';
+const SEED = './assets/hellos.json.BACKUP';
 
 const helloRepo = {
+  seed: function (resolve, reject) {
+    fs.readFile(SEED, function (err, data) {
+      if (err) reject(err);
+      else {
+        fs.writeFile(FILE, data, function (err) {
+          if (err) reject(err);
+          else resolve();
+        });
+      }
+    });
+  },
   get: function (resolve, reject) {
     fs.readFile(FILE, function (err, data) {
       if (err) {
