@@ -29,7 +29,8 @@ const helloRepo = {
       } else {
         const result = JSON.parse(data).filter(
           h => (searchObject.id ? h.id == searchObject.id : true) &&
-          (searchObject.value ? h.value == searchObject.value : true)
+          (searchObject.value ? h.value == searchObject.value : true) &&
+          (searchObject.lang ? h.lang == searchObject.lang : true)
         );
         resolve(result);
       }

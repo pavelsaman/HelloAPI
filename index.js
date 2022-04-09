@@ -31,32 +31,26 @@ router.options('/hellos', function (req, res, next) {
 router.get('/hellos', function (req, res, next) {
   const value = req.query.value;
   const id = req.query.id;
+  const lang = req.query.lang;
   
-  if (value || id) {
-    const searchObject = { value, id };
+  if (value || id || lang) {
+    const searchObject = { value, id, lang };
     helloRepo.search(searchObject, function (data) {
       if (data.length > 0) {
         res.status(200).json({
           status: 200,
           statusText: 'OK',
-          message: `Hellos with value '${req.query.value}' returned.`,
+          message: 'Hellos according to search criteria returned.',
           data: data,
         });
       } else {
-        let error_message;
-        if (value && id) {
-          error_message = `No hello with value '${req.query.value}' and id ${req.query.id} found.`;
-        } else {
-          if (value) error_message = `No hello with value '${req.query.value}' found.`;
-          if (id) error_message = `No hello with id ${req.query.id} found.`;
-        }
         res.status(404).json({
           status: 404,
           statusText: 'Not Found',
-          message: error_message,
+          message: 'No hellos found.',
           error: {
             code: 'NOT_FOUND',
-            message: error_message,
+            message: 'No hellos found.',
           },
         });
       }
