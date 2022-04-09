@@ -7,6 +7,8 @@ $ docker build . -t hello-api
 $ docker run --rm -d -p 8080:4000 hello-api
 ```
 
+or get from a Docker repo here https://hub.docker.com/r/samanpavel/hello-api.
+
 ## Run on localhost without Docker
 
 ```
