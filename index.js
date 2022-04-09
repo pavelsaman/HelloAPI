@@ -19,7 +19,7 @@ app.use((err, req, res, next) => {
           code: 'BAD_REQUEST',
           message: err.message,
         },
-      }
+      };
       return res.status(err.statusCode).json(formattedError);
   }
   next();
@@ -239,6 +239,20 @@ router.patch('/hellos/:id', function (req, res, next) {
 });
 
 app.use(`${API_PATH}${API_VERSION}`, router);
+app.use((err, req, res, next) => {
+  if (err instanceof Error) {
+    let formattedError = {
+      status: 500,
+      statusText: 'Internal Server Error',
+      message: 'Internal server error.',
+      error: {
+        code: 'INTERNAL_SERVER_ERROR',
+        message: 'Internal server error.',
+      },
+    };
+    return res.status(500).json(formattedError);
+  }
+});
 
 const server = app.listen(PORT, function () {
   console.log(`Node server is running on http://localhost:${PORT}${API_PATH}`);
