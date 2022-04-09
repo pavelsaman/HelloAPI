@@ -20,6 +20,14 @@ router.get('/ping', function (req, res, next) {
   });
 });
 
+router.options('/', function (req, res, next) {
+  res.set('Allow', 'OPTIONS, GET, POST, PUT, PATCH, DELETE').send();
+});
+
+router.options('/hellos', function (req, res, next) {
+  res.set('Allow', 'OPTIONS, GET, POST').send();
+});
+
 router.get('/hellos', function (req, res, next) {
   const value = req.query.value;
   const id = req.query.id;
