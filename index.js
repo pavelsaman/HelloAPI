@@ -3,27 +3,14 @@ const app = express();
 const router = express.Router();
 const helloRepo = require('./repos/helloRepo');
 require('dotenv').config();
+const errorHandlers = require('./helpers/errorHelper');
 
 const API_PATH = process.env.API_PATH_PREFIX;
 const API_VERSION = process.env.API_VERSION;
 const PORT = process.env.PORT;
 
 app.use(express.json());
-app.use((err, req, res, next) => {
-  if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
-      let formattedError = {
-        status: err.statusCode,
-        statusText: 'Bad Request',
-        message: err.message,
-        error: {
-          code: 'BAD_REQUEST',
-          message: err.message,
-        },
-      };
-      return res.status(err.statusCode).json(formattedError);
-  }
-  next();
-});
+app.use(errorHandlers.clientError);
 
 router.get('/ping', function (req, res, next) {
   res.status(200).json({
@@ -239,20 +226,10 @@ router.patch('/hellos/:id', function (req, res, next) {
 });
 
 app.use(`${API_PATH}${API_VERSION}`, router);
-app.use((err, req, res, next) => {
-  if (err instanceof Error) {
-    let formattedError = {
-      status: 500,
-      statusText: 'Internal Server Error',
-      message: 'Internal server error.',
-      error: {
-        code: 'INTERNAL_SERVER_ERROR',
-        message: 'Internal server error.',
-      },
-    };
-    return res.status(500).json(formattedError);
-  }
-});
+
+app.use(errorHandlers.logToConsole);
+app.use(errorHandlers.logTofile);
+app.use(errorHandlers.generalError);
 
 const server = app.listen(PORT, function () {
   console.log(`Node server is running on http://localhost:${PORT}${API_PATH}`);

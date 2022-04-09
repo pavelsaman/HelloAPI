@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const FILE = './assets/hellos2.json';
+const FILE = './assets/hellos.json';
 
 const helloRepo = {
   get: function (resolve, reject) {

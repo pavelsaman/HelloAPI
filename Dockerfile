@@ -4,4 +4,5 @@ WORKDIR /home/node/app
 USER node
 COPY --chown=node:node . .
 RUN npm install
+RUN mkdir logs 2>/dev/null
 CMD [ "node", "index.js" ]
