@@ -16,6 +16,17 @@ $ npm install
 $ npm run start
 ```
 
+## Test
+
+You can use mocha or jest to run the tests. Run one of these commands:
+
+```
+$ yarn test
+$ yarn test:jest
+```
+
+Mocha is used along with `nyc` to generate test coverage.
+
 ## Available methods
 
 ### GET /ping
