@@ -7,3 +7,12 @@ node_modules/
 README.md
 .dockerignore
 Dockerfile
+logs/
+
+# Tests
+tests/
+jest.config.js
+.mocharc.js
+
+.nyc_output/
+coverage/

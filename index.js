@@ -242,3 +242,5 @@ app.use(errorHandlers.generalError);
 const server = app.listen(PORT, function () {
   console.log(`Node server is running on http://localhost:${PORT}${API_PATH}`);
 });
+
+module.exports = app;
